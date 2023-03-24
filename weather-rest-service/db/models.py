@@ -33,7 +33,25 @@ class WeatherData(BaseModel):
     almanac: dict
 
 
+def weather_to_dict(weather):
+    return {
+        "_id": str(weather["_id"]),
+        "license": weather["license"],
 
+        "timestamp": weather["timestamp"],
+        "geolocation": weather["geolocation"],
+        "distanceToNearestStation": weather["dist"]["calculated"],
+
+        "dateTime": weather["dateTime"],
+        "location": weather["location"],
+        "warnings": weather["warnings"],
+        "currentConditions": weather["currentConditions"],
+        "forecastGroup": weather["forecastGroup"],
+        "hourlyForecastGroup": weather["hourlyForecastGroup"],
+        "yesterdayConditions": weather["yesterdayConditions"],
+        "riseSet": weather["riseSet"],
+        "almanac": weather["almanac"],
+    }
 
 
 

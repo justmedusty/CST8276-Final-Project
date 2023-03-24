@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 
-from db.db import ping, insert
+from db.db import ping, insert, find
 from db.models import WeatherData
 
 app = FastAPI()
@@ -21,8 +21,7 @@ async def weather(data: WeatherData):
 
 
 @app.get("/weather", status_code=200)
-async def weather(lon: float, lat: float):
+async def weather(loc: dict):
     """e.g., GET /weather?lon=100.8&lat=73.5"""
-    # TODO: implement find method and call from here
-    pass
+    return find(loc["lon"], loc["lat"])
 
