@@ -51,5 +51,5 @@ load_dotenv()
 POST_HOST = os.getenv("POST_HOST")
 POST_PORT = os.getenv("POST_PORT")
 
-POST_URL = f"{POST_HOST}:{POST_PORT}/weather"
+POST_URL = f"{POST_HOST}:{POST_PORT}/weather/post"
 

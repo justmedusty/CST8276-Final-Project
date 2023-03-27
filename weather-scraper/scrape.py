@@ -69,7 +69,7 @@ async def scrape_weather(
                         .strftime(TIMESTAMP_WRITE_FMT)
                 except (KeyError, IndexError) as err_k:
                     print("Could not create timestamp", err_k)
-                    return
+                    raise err_k
 
                 # add geolocation
                 coord_paths = [
@@ -85,15 +85,17 @@ async def scrape_weather(
                         lat = coord_to_float(ddict["lat"])
 
                         weather["geolocation"] = GeoJSON([lon, lat]).to_dict()
+                        weather["stationLongitude"] = lon
                     except (KeyError, TypeError) as err:
                         print("Could not create geolocation", err)
-                        return
+                        raise err
 
                 # post
                 await session.post(POST_URL, json=weather)
-
             except ClientResponseError as err_r:
                 print("failed:", url, err_r)
+            except (KeyError, TypeError) as err:
+                print("failed: missing either geolocation or timestamp", err)
 
 
 async def scrape_weather_stations(weather_stations: Iterable[WeatherStation]):

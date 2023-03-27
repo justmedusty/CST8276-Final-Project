@@ -40,7 +40,9 @@ def weather_collection() -> Collection[Mapping[str, any] | any]:
 
 def find(lon: float, lat: float):
     try:  # TODO, find most recent doc of nearest weather station
-        doc = weather_collection().aggregate([
+        doc = weather_collection(
+
+        ).aggregate([
             {
                 "$geoNear": {
                     "near": {
@@ -49,11 +51,11 @@ def find(lon: float, lat: float):
                     },
                     "key": "geolocation",
                     "spherical": True,
-                    "distanceField": "dist.calculated"
+                    "distanceField": "distanceFromWeatherStation"
                 }
             },
             {
-                "$sort": {"dist.calculated": 1, "timestamp": -1}
+                "$sort": {"distanceFromWeatherStation": 1, "timestamp": -1}
             }
         ]).next()
         return weather_to_dict(doc)
