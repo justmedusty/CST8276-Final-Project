@@ -94,7 +94,7 @@ async def scrape_weather(
                 await session.post(POST_URL, json=weather)
             except ClientResponseError as err_r:
                 print("failed:", url, err_r)
-            except (KeyError, TypeError) as err:
+            except (KeyError, TypeError, IndexError) as err:
                 print("failed: missing either geolocation or timestamp", err)
 
 
